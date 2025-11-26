@@ -1,0 +1,69 @@
+﻿@using Microsoft.AspNetCore.Identity
+@* Bạn cần tiêm UserManager và SignInManager sau khi tích hợp Identity *@
+@* @inject UserManager<ApplicationUser> UserManager *@
+@* @inject SignInManager<ApplicationUser> SignInManager *@
+@* File: Views/Shared/_AdminLayout.cshtml *@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ADMIN</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    ---------------
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="~/admin/vendors/ti-icons/css/themify-icons.css">
+    <link rel="stylesheet" href="~/admin/vendors/base/vendor.bundle.base.css">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="~/admin/css/style.css">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="~/admin/images/favicon.png" />
+
+</head>
+<body>
+    <div class="d-flex" id="wrapper">
+
+        
+        <div class="container-fluid page-body-wrapper">
+            @await Html.PartialAsync("Admin/_AdminHeader")
+            @await Html.PartialAsync("Admin/_AdminSidebar")
+            <main role="main" class="container-fluid pt-4">
+                @RenderBody()
+            </main>
+
+            
+        </div>
+       
+       
+    </div>
+    @await Html.PartialAsync("Admin/_AdminFooter")
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- plugins:js -->
+    <script src="~/admin/vendors/base/vendor.bundle.base.js"></script>
+    <!-- endinject -->
+    <!-- Plugin js for this page-->
+    <script src="~/admin/vendors/chart.js/Chart.min.js"></script>
+    <!-- End plugin js for this page-->
+    <!-- inject:js -->
+    <script src="~/admin/js/off-canvas.js"></script>
+    <script src="~/admin/js/hoverable-collapse.js"></script>
+    <script src="~/admin/js/template.js"></script>
+    <script src="~/admin/js/todolist.js"></script>
+    <!-- endinject -->
+    <!-- Custom js for this page-->
+    <script src="~/admin/js/dashboard.js"></script>
+    <!-- End custom js for this page-->
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

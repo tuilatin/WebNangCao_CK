@@ -1,0 +1,57 @@
+﻿@page
+@model QUANLYBANHANGRAZORPAGE.Pages.SanPham.IndexModel
+
+@{
+    ViewData["Title"] = "Danh sách Sản phẩm";
+}
+
+<h1>Danh sách Sản phẩm</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Sanphams[0].Tensanpham)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sanphams[0].Dongia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sanphams[0].Soluong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sanphams[0].Madanhmuc)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Sanphams == null || !Model.Sanphams.Any())
+        {
+            <div class="alert alert-warning" role="alert">
+                Không có sản phẩm nào được tìm thấy hoặc có lỗi khi tải dữ liệu.
+            </div>
+        }
+        @foreach (var item in Model.Sanphams)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tensanpham)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dongia)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Soluong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Madanhmuc)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

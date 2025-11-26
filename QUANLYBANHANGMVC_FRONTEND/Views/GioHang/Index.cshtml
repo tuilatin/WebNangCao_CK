@@ -1,0 +1,114 @@
+﻿@using QUANLYBANHANGMVC_FRONTEND.Models.ViewModels
+@{
+    ViewData["Title"] = "Giỏ Hàng";
+}
+
+@* Hiển thị thông báo TempData *@
+@if (TempData["Success"] != null)
+{
+    <div style="max-width: 1200px; margin: 20px auto; padding: 15px; background-color: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724;">
+        <strong>✓ Thành công:</strong> @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div style="max-width: 1200px; margin: 20px auto; padding: 15px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">
+        <strong>✗ Lỗi:</strong> @TempData["Error"]
+    </div>
+}
+
+<div class="cart-container">
+    <div class="cart-header">
+        <h1>🛒 GIỎ HÀNG CỦA BẠN</h1>
+    </div>
+
+    <table class="cart-table">
+        <thead>
+            <tr>
+                <th>Mã</th>
+                <th>Hình ảnh</th>
+                <th>Tên sản phẩm</th>
+                <th>Mô tả</th>
+                <th>Đơn giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+                <th>Thao tác</th>
+            </tr>
+        </thead>
+        <tbody id="cartBody">
+    @if (Model != null && Model.Any())
+    {
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            var item = Model[i];
+            <tr>
+                <td>@item.Masanpham</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(item.Hinhanh))
+                    {
+                        <img src="~/images/@item.Hinhanh" alt="@item.Tensanpham" class="product-image">
+                    }
+                    else
+                    {
+                        <img src="https://via.placeholder.com/80x80/4a90e2/ffffff?text=Product" alt="@item.Tensanpham" class="product-image">
+                    }
+                </td>
+                <td>
+                    <div class="product-info">
+                        <div>
+                            <div class="product-name">@item.Tensanpham</div>
+                            <div class="product-specs">
+                                Mã sản phẩm: @item.Masanpham
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td><span class="product-specs">@(item.Mota ?? "Không có mô tả")</span></td>
+                <td><span class="price">@((item.Dongia ?? 0).ToString("N0")) đ</span></td>
+                <td>
+                    <div class="quantity-control">
+                        <button onclick="decreaseQuantity(@i)">-</button>
+                        <input type="number" value="@item.Soluong" min="1" id="qty-@i" onchange="updateTotal()">
+                        <button onclick="increaseQuantity(@i)">+</button>
+                    </div>
+                </td>
+                <td><span class="total-price" id="total-@i">@(item.ThanhTien.ToString("N0")) đ</span></td>
+                <td>
+                    <button class="btn-delete" onclick="removeItem(@i)">Xóa</button>
+                </td>
+            </tr>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="8">
+                <div class="empty-cart">
+                    <div class="empty-cart-text">Giỏ hàng của bạn đang trống</div>
+                </div>
+            </td>
+        </tr>
+    }
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <div class="summary-row">
+            <span class="summary-label">Tổng cộng:</span>
+            <span class="summary-value" id="grandTotal">0 đ</span>
+        </div>
+        <div class="cart-actions">
+            <a class="btn btn-continue" asp-controller="Home" asp-action="Index">
+                ← Tiếp tục mua hàng
+            </a>
+            <button class="btn btn-clear" onclick="clearCart()">
+                🗑️ Xóa toàn bộ
+            </button>
+            <button class="btn btn-checkout">
+                ✓ Đặt hàng
+            </button>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,66 @@
+﻿@page
+@model QUANLYBANHANGRAZORPAGE.Pages.SanPham.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TbSanpham[0].Tensanpham)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TbSanpham[0].Dongia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TbSanpham[0].Soluong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TbSanpham[0].Hinhanh)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TbSanpham[0].Mota)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TbSanpham[0].MadanhmucNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.TbSanpham) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tensanpham)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dongia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Soluong)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hinhanh)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MadanhmucNavigation.Madanhmuc)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Masanpham">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Masanpham">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Masanpham">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

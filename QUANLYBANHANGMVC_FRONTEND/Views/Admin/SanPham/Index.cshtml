@@ -1,0 +1,47 @@
+﻿@using QUANLYBANHANGMVC_FRONTEND.Extensions
+@{
+    ViewData["Title"] = "Quản lý Sản phẩm";
+}
+
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Quản lý Sản phẩm</h2>
+            @{
+                var username = Context.Session.GetString("Username");
+                var role = Context.Session.GetString("UserRole");
+                if (!string.IsNullOrEmpty(username))
+                {
+                    <p class="text-muted mb-0">
+                        Xin chào, <strong>@username</strong> 
+                        @if (!string.IsNullOrEmpty(role))
+                        {
+                            <span class="badge bg-primary ms-2">@role</span>
+                        }
+                    </p>
+                }
+            }
+        </div>
+        <div class="d-flex gap-2">
+            <a asp-controller="SanPham" asp-action="Create" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Thêm sản phẩm mới
+            </a>
+            @if (!string.IsNullOrEmpty(Context.Session.GetString("Username")))
+            {
+                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <button type="submit" class="btn btn-outline-danger">
+                        <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                    </button>
+                </form>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <p class="text-muted">Danh sách sản phẩm sẽ được hiển thị ở đây.</p>
+            <!-- TODO: Thêm logic hiển thị danh sách sản phẩm từ API -->
+        </div>
+    </div>
+</div>

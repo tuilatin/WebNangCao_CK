@@ -1,0 +1,47 @@
+﻿@using QUANLYBANHANGMVC_FRONTEND.Extensions
+
+<nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+    <div class="navbar-brand-wrapper d-flex justify-content-center">
+        <div class="navbar-brand-inner-wrapper d-flex align-items-center justify-content-center">
+            <a class="navbar-brand brand-logo" href="/Admin/SanPham/Index">
+                <span style="color: #667eea; font-weight: bold;">ADMIN PANEL</span>
+            </a>
+        </div>
+    </div>
+    <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <ul class="navbar-nav navbar-nav-right">
+            <li class="nav-item nav-profile dropdown">
+                <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
+                    @{
+                        var username = Context.Session.GetString("Username");
+                        var role = Context.Session.GetString("UserRole");
+                        if (!string.IsNullOrEmpty(username))
+                        {
+                            <span class="nav-profile-name">@username</span>
+                            @if (!string.IsNullOrEmpty(role))
+                            {
+                                <span class="badge bg-primary ms-2">@role</span>
+                            }
+                        }
+                        else
+                        {
+                            <span class="nav-profile-name">Guest</span>
+                        }
+                    }
+                </a>
+                <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                    @if (!string.IsNullOrEmpty(Context.Session.GetString("Username")))
+                    {
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline w-100">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="dropdown-item" style="border: none; background: none; width: 100%; text-align: left;">
+                                <i class="fas fa-sign-out-alt text-danger"></i> Đăng xuất
+                            </button>
+                        </form>
+                    }
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+

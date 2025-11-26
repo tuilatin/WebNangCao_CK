@@ -1,0 +1,190 @@
+﻿@model QUANLYBANHANGMVC_FRONTEND.Models.ViewModels.LoginViewModel
+@using QUANLYBANHANGMVC_FRONTEND.Extensions
+
+@{
+    ViewData["Title"] = "Đăng nhập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .auth-container {
+        min-height: calc(100vh - 200px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 2rem 0;
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    }
+
+    .auth-card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        overflow: hidden;
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .auth-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .auth-header h2 {
+        margin: 0;
+        font-size: 1.8rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+    .auth-body {
+        padding: 2.5rem;
+    }
+
+    .auth-form .form-label {
+        font-weight: 500;
+        color: #333;
+        margin-bottom: 0.5rem;
+    }
+
+    .auth-form .form-control {
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        transition: all 0.3s;
+    }
+
+    .auth-form .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+    }
+
+    .auth-form .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        border-radius: 8px;
+        padding: 0.75rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .auth-form .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .auth-link {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    .auth-link:hover {
+        color: #764ba2;
+        text-decoration: underline;
+    }
+
+    .text-danger {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: none;
+    }
+
+    /* Override layout styles */
+    .products {
+        padding: 0 !important;
+    }
+
+    .product-grid {
+        display: block !important;
+        grid-template-columns: none !important;
+        gap: 0 !important;
+    }
+</style>
+
+<div class="auth-container">
+    <div class="auth-card">
+        <div class="auth-header">
+            <h2>Đăng nhập</h2>
+        </div>
+        <div class="auth-body">
+                    
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    @TempData["Success"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    @TempData["ErrorMessage"]
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            }
+
+            @{
+                var errorMessage = Context.Session.GetString("ErrorMessage");
+                if (!string.IsNullOrEmpty(errorMessage))
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        @errorMessage
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    Context.Session.Remove("ErrorMessage");
+                }
+            }
+
+            @if (ViewData.ModelState.ErrorCount > 0)
+            {
+                <div class="alert alert-danger">
+                    <ul class="mb-0">
+                        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                        {
+                            <li>@error.ErrorMessage</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            <form asp-action="Login" method="post" class="auth-form">
+                @Html.AntiForgeryToken()
+                
+                <div class="mb-4">
+                    <label asp-for="Username" class="form-label">Tên đăng nhập</label>
+                    <input asp-for="Username" class="form-control" placeholder="Nhập tên đăng nhập" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Password" class="form-label">Mật khẩu</label>
+                    <input asp-for="Password" type="password" class="form-control" placeholder="Nhập mật khẩu" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid gap-2 mb-3">
+                    <button type="submit" class="btn btn-primary">Đăng nhập</button>
+                </div>
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="mb-0">Chưa có tài khoản? <a asp-action="Register" class="auth-link">Đăng ký ngay</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
