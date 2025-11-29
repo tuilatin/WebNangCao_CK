@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QUANLYBANHANGMVC_FRONTEND</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/QUANLYBANHANGMVC_FRONTEND.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="d-flex justify-content-between align-items-center">
+                <div>
+                    @{
+                        var username = Context.Session.GetString("Username");
+                        var role = Context.Session.GetString("UserRole");
+                        if (!string.IsNullOrEmpty(username))
+                        {
+                            <span class="text-white me-3">
+                                Xin chào, <strong>@username</strong>
+                                @if (!string.IsNullOrEmpty(role))
+                                {
+                                    <span class="badge bg-light text-dark ms-2">@role</span>
+                                }
+                            </span>
+                        }
+                    }
+                </div>
+                <div class="d-flex gap-2">
+                    @if (string.IsNullOrEmpty(Context.Session.GetString("Username")))
+                    {
+                        <a asp-controller="Account" asp-action="Login" class="btn-login">Đăng nhập</a>
+                        <a asp-controller="Account" asp-action="Register" class="btn-login">Đăng ký</a>
+                    }
+                    else
+                    {
+                        <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="btn-login" style="background: rgba(255,255,255,0.2); border: 2px solid white;">
+                                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                            </button>
+                        </form>
+                    }
+                </div>
+            </nav>
+        </div>
+    </header>
+
+  
+    <section class="products" id="products">
+        <div class="container">           
+            <div class="product-grid">
+                @RenderBody()
+           
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        © 2024 ShopOnline. Tất cả quyền được bảo lưu.
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

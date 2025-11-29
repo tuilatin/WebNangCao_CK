@@ -1,0 +1,80 @@
+﻿/* File: Views/Shared/Admin/_AdminLayout.cshtml.css */
+
+/* 1. KHUNG SƯỜN CHUNG */
+:host {
+    display: flex;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+
+/* 2. SIDEBAR */
+.sidebar-wrapper {
+    width: 250px;
+    min-height: 100vh;
+    background-color: #00796b; /* Màu Xanh Lá Đậm Đặc Trưng */
+    color: #ffffff;
+    position: fixed;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    padding-top: 20px;
+    z-index: 1030;
+}
+
+/* Header & Tên Hệ thống trong Sidebar */
+.sidebar-header {
+    text-align: center;
+    padding: 10px 0 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 10px;
+}
+
+    .sidebar-header .text-secondary-light {
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+/* Menu items */
+.sidebar-wrapper .nav-link {
+    color: #ffffff;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+    .sidebar-wrapper .nav-link:hover,
+    .sidebar-wrapper .nav-link.active {
+        background-color: #006057; /* Màu hover tối hơn */
+        color: #ffffff;
+    }
+
+/* Nút Đăng xuất (Dưới cùng) */
+.logout-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 15px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 3. NỘI DUNG CHÍNH */
+.content-wrapper {
+    margin-left: 250px;
+    flex-grow: 1;
+    width: 100%;
+}
+
+/* HEADER TOP (Thanh trên cùng trắng) */
+.admin-header {
+    background-color: white;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Footer dưới cùng */
+.admin-app-footer {
+    background-color: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    padding: 15px 0;
+    color: #6c757d;
+    font-size: 0.9rem;
+}
