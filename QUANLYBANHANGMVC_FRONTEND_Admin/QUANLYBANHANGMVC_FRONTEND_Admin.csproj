@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\QUANLYBANHANG\QUANLYBANHANG.csproj" />
+    <ProjectReference Include="..\QUANLYBANHANG\QUANLYBANHANG_API.csproj" />
   </ItemGroup>
 
   <ItemGroup>
